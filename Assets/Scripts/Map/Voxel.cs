@@ -12,6 +12,11 @@ public class Voxel
 
     public Mesh mesh;
 
+    public Vector3 position {
+        get { return this.gameObject.transform.position; }
+        set { this.gameObject.transform.position = value; }
+    }
+
     public float Height {
         get;
     }

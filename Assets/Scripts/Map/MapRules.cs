@@ -16,6 +16,9 @@ public class MapRules : MonoBehaviour
     [Range(0, 100)]
     public int wallPercent = 60;
 
+    private float TIME = 0, TIME_STEP = 0.1f;
+    private List<Unit> units;
+
     void Start()
     {
         this.digitalMap = new int[WIDTH, LENGTH];
@@ -77,11 +80,41 @@ public class MapRules : MonoBehaviour
                     if(voxelMap[z,y].Height > voxelMap[z+1, y].Height) 
                         voxelMap[z,y].genereteRightConnector(voxelMap[z+1, y]);
             }
+
+        Unit.digitalMap = this.digitalMap;
+        Unit.objectMap = this.voxelMap;
+
+        Unit u1 = new Unit(new Vector2(0, 1));
+        Unit u2 = new Unit(new Vector2(0, 3));
+        Unit u3 = new Unit(new Vector2(0, 6));
+        Unit u4 = new Unit(new Vector2(0, 8));
+        Unit u5 = new Unit(new Vector2(0, 10));
+        Unit u6 = new Unit(new Vector2(0, 12));
+
+
+        units = new List<Unit>();
+        units.Add(u1);
+        units.Add(u2);
+        units.Add(u3);
+        units.Add(u4);
+        units.Add(u5);
+        units.Add(u6);
     }
 
-    void Update()
-    {
-        
+    void Update() {
+        // if(MapGenerator.TIME % 2 == 0) {
+        if(System.Math.Round(TIME, 1) % 2 == 0) {
+            creatureCycle();
+        }
+            
+
+        TIME += TIME_STEP;
+    }
+
+    private void creatureCycle() {
+        foreach(Unit unit in units) {
+            unit.MakeMove();
+        }
     }
 
 
